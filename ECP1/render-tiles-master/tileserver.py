@@ -16,7 +16,7 @@ POSTGIS_TABLE = dict(
     user='postgres',
     password='12345',
     dbname='kelasgis',
-    table='(select ST_Buffer(ST_Centroid(geom), 2) as geom, id from tugasgis) as tugasis')
+    table='(select ST_MPolyFromText(ST_AsText(geom)) as geom, nama from NusaPenida) as NusaPenida')
 LAYER_NAME = 'pantai'
 
 WGS84 = '+proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs'  # 4326
@@ -107,11 +107,20 @@ def render_tile(layer, z, x, y):
     s = mapnik.Style()
     r = mapnik.Rule()
 
-    line_symbolizer = mapnik.PointSymbolizer()
-#    line_symbolizer.stroke_width = 5.0
-    line_symbolizer.allow_overlap = True
-    line_symbolizer.transform="scale(1,1)"
+    #line_symbolizer = mapnik.PointSymbolizer()
+    line_symbolizer = mapnik.PolygonSymbolizer()
+    line_symbolizer.fill = mapnik.Color('yellow')
+    line_symbolizer.fill_opacity = 0.7
+    #line_symbolizer.allow_overlap = True
+    #line_symbolizer.transform="scale(5,5)"
     r.symbols.append(line_symbolizer)
+
+    label = mapnik.TextSymbolizer(mapnik.Expression('[nama]'), 'DejaVu Sans Book',24,mapnik.Color('red'
+    ))
+    label.halo_radius = 1
+    label.avoid_edges = False
+    r.symbols.append(label)
+    
     s.rules.append(r)
 
     m.append_style('My Style', s)
