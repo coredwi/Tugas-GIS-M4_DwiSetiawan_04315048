@@ -1,2 +1,6 @@
-# Tugas-GIS-M4_DwiSetiawan_04315048
-Tugas GIS M4
+# TUGAS GIS
+
+## DWI SETIAWAN
+### 04315048
+### Teknik Informatika - B
+#### Fakultas Ilmu Komputer | Universitas Narotama Surabaya
